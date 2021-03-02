@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import API from "../utils/API";
-import SearchForm from "../components/Search/SearchForm";
+import SearchForm from "../components/Search/Search";
+import SavedForm from "../components/Saved/Saved"
 
 class Search extends Component {
     state = {
@@ -16,7 +17,7 @@ class Search extends Component {
         return{
             _id: book.id,
             title: book.volumeInfo.title,
-            authors: book.volumeInfo.authors[0],
+            authors: book.volumeInfo.authors,
             description: book.volumeInfo.description,
             image: book.volumeInfo.imageLinks.thumbnail,
             link: book.volumeInfo.previewLink
@@ -51,6 +52,8 @@ class Search extends Component {
                 search={this.state.search}
                 />
                 <div className="container" id="savedContainer">
+                    <h2>Your Results</h2>
+                    <SavedForm books={this.state.books} />
 
                 </div>
             </div>

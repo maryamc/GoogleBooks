@@ -3,8 +3,8 @@ import "./header.css";
 
 function Header() {
     return (
-        <div className= "jumbotron">
-            <div className="container">
+        <div className= "jumbotron headerJumb" style={{backgroundColor: "rgb(229, 197, 255)"}}>
+            <div className="container" id="pageTitle">
                 <h1>
                     Google Books
                 </h1>

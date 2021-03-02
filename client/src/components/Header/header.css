@@ -1,0 +1,11 @@
+.headerJumb{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(229, 197, 255)
+}
+
+#pageTitle{
+    display: flex;
+    justify-content: center;
+   
+}

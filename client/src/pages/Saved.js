@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import API from "../utils/API";
+import SavedForm from "../components/Saved/Saved"
 
 class Saved extends Component {
 
@@ -15,6 +16,7 @@ class Saved extends Component {
         return(
             <div className="container">
                 <h2>Saved Books</h2>
+                <SavedForm  books={this.state.savedBooks}/>
 
             </div>
         )

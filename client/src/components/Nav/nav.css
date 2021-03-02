@@ -1,0 +1,15 @@
+nav {
+    background-color: rgb(163, 50, 255)
+}
+
+.navbar-brand {
+    font-size: 35px;
+    font-weight: 20px;
+    color:white
+}
+
+.nav-item a {
+    font-size: 25px;
+    color:white;
+    
+}
