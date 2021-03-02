@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import API from "../utils/API";
 import SearchForm from "../components/Search/SearchForm";
 
-class Search extends React.Component {
+class Search extends Component {
     state = {
         books: [],
         value: ""
