@@ -43,7 +43,7 @@ class Search extends React.Component {
         event.preventDefault();
         API.getBooks(this.state.query).then(res => {
             console.log(res.data)
-            this.setState({books:res.data})
+            this.setState({books:res.data.items})
         }).catch(err => {console.log(err)})
     };
 
@@ -58,6 +58,18 @@ class Search extends React.Component {
                 <div className="container" id="savedContainer">
                     <h2>Your Results</h2>
                     <SavedForm books={this.state.books} />
+                    {this.state.books.map(book => 
+                    <div className="card">
+                        <div className="cardBody">
+                       <p>{book.volumeInfo.title}</p>
+                       <p>{book.volumeInfo.author}</p>
+                       <p>{book.volumeInfo.description}</p>
+                       <img src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "No Image"}></img>
+                       {/* <p>{book.volumeInfo.previewLink}</p> */}
+                        </div>
+                    </div>
+
+                    )}
 
                 </div>
             </div>
