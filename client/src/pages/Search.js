@@ -6,12 +6,9 @@ import SavedForm from "../components/Saved/Saved"
 class Search extends React.Component {
     state = {
         books: [],
-        query: ""
+        query: "",
+        savedBooks: {}
     };
-
-    // componentDidMount(){
-    //     this.bookSearch();
-    // };
 
     createBook = bookData => {
         return{
@@ -23,14 +20,6 @@ class Search extends React.Component {
             link: bookData.volumeInfo.previewLink
         }
     };
-
-    // bookSearch = e => {
-    //     API.getBooks(this.state.query).then(res => {
-    //         console.log(res.data)
-    //         this.setState({books:res.data})
-    //     })
-        
-    // };
 
     handleInputChange = e => {
         const value = e.target.value;
@@ -47,6 +36,36 @@ class Search extends React.Component {
         }).catch(err => {console.log(err)})
     };
 
+
+    //this function should save the books to the db but its not working properly. The id does save but it doesnt push to the db
+    saveBook = (e)=>{
+        const clickedid = e.target.value
+        console.log(clickedid)
+
+        const foundBook = this.state.books.find(book => book.id === clickedid)
+        console.log(foundBook)
+
+        this.setState({savedBooks: 
+            {title:foundBook.volumeInfo.title,
+                author:foundBook.volumeInfo.author,
+                description:foundBook.volumeInfo.description,
+                image:foundBook.volumeInfo.image,
+                link:foundBook.volumeInfo.link
+            }} , () => {
+                API.saveUserBook({
+                    title:this.state.savedBooks.title,
+                author:this.state.savedBooks.author,
+                description:this.state.savedBooks.description,
+                image:this.state.savedBooks.image,
+                link:this.state.savedBooks.link
+                }).then(() => {
+                    this.setState({savedBooks: {}})
+                })
+            })
+    } 
+
+    
+
     render(){
         return(
             <div>
@@ -59,7 +78,7 @@ class Search extends React.Component {
                     <h2>Your Results</h2>
                     <SavedForm books={this.state.books} />
                     {this.state.books.map(book => 
-                    <div className="card">
+                    <div className="card" key={book.id}>
                         <div className="cardBody">
                        <p>{book.volumeInfo.title}</p>
                        <p>{book.volumeInfo.author}</p>
@@ -67,6 +86,10 @@ class Search extends React.Component {
                        <img src={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "No Image"}></img>
                        {/* <p>{book.volumeInfo.previewLink}</p> */}
                         </div>
+                        <button className="btn btn-primary" 
+                        onClick={(() => {window.location.href = book.volumeInfo.previewLink})}> View</button>
+                        <button className="btn btn-warning"
+                        onClick={this.saveBook} value={book.id}> Save </button>
                     </div>
 
                     )}
