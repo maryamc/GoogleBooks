@@ -13,4 +13,7 @@ router
   .put(booksController.update)
   .delete(booksController.remove);
 
+router.route("/:query")
+.get(booksController.queryBooks)
+
 module.exports = router;

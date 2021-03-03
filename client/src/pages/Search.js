@@ -1,46 +1,50 @@
-import React, {Component} from 'react';
+import React from 'react';
 import API from "../utils/API";
 import SearchForm from "../components/Search/Search";
 import SavedForm from "../components/Saved/Saved"
 
-class Search extends Component {
+class Search extends React.Component {
     state = {
         books: [],
-        value: ""
+        query: ""
     };
 
-    componentDidMount(){
-        this.bookSearch();
-    };
+    // componentDidMount(){
+    //     this.bookSearch();
+    // };
 
-    createBook = book => {
+    createBook = bookData => {
         return{
-            _id: book.id,
-            title: book.volumeInfo.title,
-            authors: book.volumeInfo.authors,
-            description: book.volumeInfo.description,
-            image: book.volumeInfo.imageLinks.thumbnail,
-            link: book.volumeInfo.previewLink
+            _id: bookData.id,
+            title: bookData.volumeInfo.title,
+            authors: bookData.volumeInfo.authors,
+            description: bookData.volumeInfo.description,
+            image: bookData.volumeInfo.imageLinks.thumbnail,
+            link: bookData.volumeInfo.previewLink
         }
     };
 
-    bookSearch = query => {
-        API.getBooks(query).then(res=>this.setState({
-            books: res.data.items.map(book => this.createBook(book))
-        })).catch(err => console.error(err));
-    };
+    // bookSearch = e => {
+    //     API.getBooks(this.state.query).then(res => {
+    //         console.log(res.data)
+    //         this.setState({books:res.data})
+    //     })
+        
+    // };
 
     handleInputChange = e => {
-        const name = e.target.name;
         const value = e.target.value;
         this.setState({
-            [name]: value
+            query: value
         });
     };
 
     handleFormSubmit = event => {
         event.preventDefault();
-        this.bookSearch(this.state.search);
+        API.getBooks(this.state.query).then(res => {
+            console.log(res.data)
+            this.setState({books:res.data})
+        }).catch(err => {console.log(err)})
     };
 
     render(){

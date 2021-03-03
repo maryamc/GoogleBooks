@@ -3,8 +3,9 @@ import axios from "axios";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   //Gets all books
-  getBooks: function (query) {
-    return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+  getBooks: async function (query) {
+    console.log(query)
+    return await axios.get("https://www.googleapis.com/books/v1/volumes?q=" + query);
   },
 
   //Delets books with id
@@ -13,8 +14,8 @@ export default {
   },
 
   // Saves a book to the database
-  saveBook: function(book) {
-    return axios.post("/api/books", book).then(result => result.data);
+  saveBook: function(bookData) {
+    return axios.post("/api/books", bookData).then(result => result.data);
   },
 
   savedBooks: function () {
@@ -30,5 +31,6 @@ export default {
     // return axios.get("/api/books/" + id);
   // },
   
+  // "`https://www.googleapis.com/books/v1/volumes?q=${query}`
   
 

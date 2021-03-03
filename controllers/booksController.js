@@ -1,4 +1,6 @@
 const db = require("../models");
+const {axios} = require("axios");
+const APIURL = "https://www.googleapis.com/books/v1/volumes?q=";
 
 // Defining methods for the booksController
 module.exports = {
@@ -33,5 +35,19 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  queryBooks: function (req, res){
+    let searchValue = req.params.query
+    console.log(req.params.query)
+
+    APIURL += searchValue
+    axios.get(APIURL).then(result => {
+      console.log(result.data)
+      if (!result.data.items ) {
+        return 
+      } else {
+        res.json(result.data.items)
+      }
+    })
   }
 };
